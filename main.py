@@ -1,3 +1,5 @@
+import matplotlib.pyplot as plt
+
 def f(x):
     return x**4 - 3*x**3 + 2
 
@@ -6,8 +8,11 @@ def derivative(f, x, h=1e-5):
 
 def gradient_descent(f, x0, lr=0.01, max_iter=1000, tol=1e-6):
     x = x0
+    history = []
 
     for i in range(max_iter):
+        history.append(x)
+
         grad = derivative(f, x)
         new_x = x - lr * grad
 
@@ -16,13 +21,22 @@ def gradient_descent(f, x0, lr=0.01, max_iter=1000, tol=1e-6):
 
         x = new_x
 
-    return x
+    return x, history
 
 # Run
-x_min = gradient_descent(f, x0=0.5)
+x_min, history = gradient_descent(f, x0=0.5)
 
 print("Minimum x:", x_min)
 print("Minimum value:", f(x_min))
+
+# Try different starting points
 for start in [-1, 0, 1, 2]:
-    x = gradient_descent(f, start)
+    x, _ = gradient_descent(f, start)
     print(f"Start {start} → Min at {x}")
+
+# Plot convergence
+plt.plot(history)
+plt.title("Convergence of x")
+plt.xlabel("Iterations")
+plt.ylabel("x value")
+plt.show()
