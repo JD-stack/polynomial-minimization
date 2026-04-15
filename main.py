@@ -23,3 +23,6 @@ x_min = gradient_descent(f, x0=0.5)
 
 print("Minimum x:", x_min)
 print("Minimum value:", f(x_min))
+for start in [-1, 0, 1, 2]:
+    x = gradient_descent(f, start)
+    print(f"Start {start} → Min at {x}")
